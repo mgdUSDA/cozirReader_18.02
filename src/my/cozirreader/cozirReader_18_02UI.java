@@ -620,7 +620,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
     public void getReadings(String portName, String id, String starttime, String datetime, String fp) {
 
         String dataString, readings, sampleInfo, sensorType = "NA", Z, cozirT, uvfluxT, H, O, P, G, pollMode;
-        String[] lines, sensorData, GroveMCGSNames = {"millis", "NH3", "CO", "NO2", "C3H8", "C4H10", "CH4", "H2", "C2H5OH", "Humidity", "Temperature"};
+        String[] lines, sensorData, GroveMCGSNames = {"NH3", "CO", "NO2", "C3H8", "C4H10", "CH4", "H2", "C2H5OH", "Temperature", "Humidity"};
         double sampleTime;
         int groveMax;
 
@@ -838,13 +838,23 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-try {
+       try {
+            port.writeBytes(readCommand);
+            // port.writeBytes(readCommand);
+        } catch (SerialPortException ex) {
+            Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             sensorResponse = port.readString();
             System.out.println("pollGrove[sensorResponse]: " + sensorResponse + " (First read after sensor startup)");
         } catch (SerialPortException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-/*
         try {
             port.writeBytes(readCommand);
             // port.writeBytes(readCommand);
@@ -852,11 +862,11 @@ try {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(800);
         } catch (InterruptedException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
+        
         try {
             sensorResponse = port.readString();
             System.out.println("pollGrove[sensorResponse]: " + sensorResponse);
