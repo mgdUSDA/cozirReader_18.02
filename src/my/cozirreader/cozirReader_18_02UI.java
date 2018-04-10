@@ -611,7 +611,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
-            System.out.println("openPort[port]: " + port.getPortName());
+            //System.out.println("openPort[port]: " + port.getPortName());
         } catch (SerialPortException ex) {
             System.out.println(ex);
         }
@@ -639,7 +639,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
 
         // Set sensor to polling mode
         pollMode = idSensor(serialPort, pollCozirCommand);
-        System.out.println("getReadings[pollMode]: " + pollMode);
+        //System.out.println("getReadings[pollMode]: " + pollMode);
         if (null != pollMode) {
             switch (pollMode) {
                 case " K 00002\r\n":
@@ -663,8 +663,8 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
             // to wake up and repond.
             sensorType = "GroveSeeed";
         }
-        System.out.println("getReadings[pollMode] (final): " + pollMode);
-        System.out.println("getReadings[sensorType]: " + sensorType);
+        //System.out.println("getReadings[pollMode] (final): " + pollMode);
+        //System.out.println("getReadings[sensorType]: " + sensorType);
         if ("Cozir".equals(sensorType)) {
 
             // Do Cozir measurements
@@ -735,7 +735,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
         // Otherwise assume maybe a Grove Seeeduino?
         if ("GroveSeeed".equals(sensorType)) {
             G = pollGrove(serialPort, groveCommand);
-            System.out.println("getReadings[G]: " + G);
+            //System.out.println("getReadings[G]: " + G);
             lines = G.split("\r\n|\r|\n");
             dataString = lines[lines.length - 1];
             sensorData = dataString.split(",");
@@ -743,7 +743,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
             groveMax = Math.min(sensorData.length, GroveMCGSNames.length);
             for (int i = 0; i < groveMax; i++) {
                 readings = sampleInfo + "," + String.format("%.3f", sampleTime) + "," + sensorData[i] + "," + GroveMCGSNames[i] + "," + portName + "\n";
-                System.out.println(readings);
+                //System.out.println(readings);
                 writeData(fp, readings);
                 jTextArea_output.append(readings);
             }
@@ -794,7 +794,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
         } catch (SerialPortException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("idSensor[sensorResponse]: " + sensorResponse);
+        //System.out.println("idSensor[sensorResponse]: " + sensorResponse);
         return (sensorResponse);
     }
 
@@ -851,7 +851,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
         }
         try {
             sensorResponse = port.readString();
-            System.out.println("pollGrove[sensorResponse]: " + sensorResponse + " (First read after sensor startup)");
+            //System.out.println("pollGrove[sensorResponse]: " + sensorResponse + " (First read after sensor startup)");
         } catch (SerialPortException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -869,7 +869,7 @@ public class cozirReader_18_02UI extends javax.swing.JFrame {
         
         try {
             sensorResponse = port.readString();
-            System.out.println("pollGrove[sensorResponse]: " + sensorResponse);
+            //System.out.println("pollGrove[sensorResponse]: " + sensorResponse);
         } catch (SerialPortException ex) {
             Logger.getLogger(cozirReader_18_02UI.class.getName()).log(Level.SEVERE, null, ex);
         }
